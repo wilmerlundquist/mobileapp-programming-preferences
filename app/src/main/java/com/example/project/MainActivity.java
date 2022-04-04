@@ -1,4 +1,4 @@
-package com.example.webviewapp;
+package com.example.project;
 
 import android.os.Bundle;
 
