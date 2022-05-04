@@ -24,12 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
         textViewName = findViewById(R.id.name);
 
-        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("name", "Wilmer");
-        editor.apply();
-
-
         Button b = findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

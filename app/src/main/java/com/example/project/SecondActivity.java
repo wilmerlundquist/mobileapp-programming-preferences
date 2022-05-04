@@ -11,10 +11,17 @@ import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
 
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", "Wilmer");
+        editor.apply();
 
         Button b = findViewById(R.id.button2);
         b.setOnClickListener(new View.OnClickListener() {
