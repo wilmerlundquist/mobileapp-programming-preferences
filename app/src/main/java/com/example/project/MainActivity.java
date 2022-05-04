@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
         textViewName = findViewById(R.id.name);
 
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+
         Button b = findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
 
         String name = preferences.getString("name", "inget namn hittades");
         textViewName.setText(name);
+
+        super.onResume();
     }
 }
