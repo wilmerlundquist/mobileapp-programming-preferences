@@ -1,42 +1,76 @@
+Assignment 6 Rapport.
 
-# Rapport
 
-**Skriv din rapport här!**
-
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+Det första som skulle göras i uppgiften var att skapa shared preferences i MainActivity som kan läsa data.
+Detta gjordes genom att lägga till koden:
+textViewName = findViewById(R.id.name) används för att hitta den textView widgeten som ska användas.
+Sedan i onResume så skrivs koden som ska kunna läsa datan som skickas.
+Först så hämtas textsträngen getString och sedan så sätts den hämtade texten i textViewName med koden setText.
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
+onCreate {
+    textViewName = findViewById(R.id.name);
+    ...
 }
+
+onResume {
+    String name = preferences.getString("name", "inget namn hittades");
+    textViewName.setText(name);
+
+    super.onResume();
+}
+
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
 
-![](android.png)
+Efter detta så skapades en ny aktivitet (SecondActivity), och varsin button till layouten i activity_main samt activity_second.
+Det lades sedan till kod så att button widgeten ska vid onClick byta mellan aktiviteterna.
+Först används findViewById för att hitta button widgeten som ska gälla.
+Sedan sätts en onClick på button, där den button som är i MainActivity byter sida till SecondActivity och tvärtom.
+Koden till detta ser ut såhär:
 
-Läs gärna:
+```
+MainActivity:
+    Button b = findViewById(R.id.button);
+    b.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            startActivity(intent);
+        }
+    });
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+SecondActivity:
+    Button b = findViewById(R.id.button2);
+    b.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    });
+
+```
+
+I SecondActivity skrivs Shared Preferences kod som ska kunna skicka data.
+Först läggs SharedPreferences in och detta är objektet som håller våra preferences.
+Seadan läggs SharedPreferences.Editor till, och denna kod låter oss att göra ändringar/uppdateringar i datan.
+I putString skrivs den data som ska lagras.
+Och sist editor.apply(); lagrar datan.
+
+```
+
+SecondActivity:
+onCreate {
+    preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.putString("name", "Wilmer");
+    editor.apply();
+    ...
+
+}
+
+```
+
+
+
